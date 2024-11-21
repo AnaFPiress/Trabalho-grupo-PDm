@@ -1,6 +1,8 @@
 package com.example.saudemais
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,5 +13,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val button: Button = findViewById(R.id.button)
+
+        button.setOnClickListener() {
+            val intent: Intent = Intent(this, Sintomas::class.java)
+            startActivity(intent)
+        }
     }
 }
