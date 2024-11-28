@@ -19,7 +19,7 @@ class MainActivity :
         val login: Button = findViewById(R.id.login)
 
         login.setOnClickListener() {
-            val intent: Intent = Intent(this, Sintomas::class.java)
+            val intent: Intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
     }
