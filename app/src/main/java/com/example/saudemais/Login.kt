@@ -24,7 +24,9 @@ class Login : AppCompatActivity() {
             val intent: Intent = Intent(this, CriarConta::class.java)
             startActivity(intent)
         }
-
+        if (email.text.isNullOrEmpty()){
+            println("Olá")
+        }
 
 
     }
