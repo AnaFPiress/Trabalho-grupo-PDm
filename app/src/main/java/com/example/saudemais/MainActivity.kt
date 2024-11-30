@@ -45,6 +45,7 @@ class MainActivity :
             alert.dismiss()
         }
 
+        // botao discordar
         val button1 = customView.findViewById<Button>(R.id.Disc)
         button1.setOnClickListener {
             val intent: Intent = Intent(this, Login::class.java)
