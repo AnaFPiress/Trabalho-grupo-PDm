@@ -21,17 +21,30 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="60dp"
+        android:id="@+id/Disc"
+        android:layout_width="177dp"
         android:layout_height="39dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#00000000"
-        android:text="X"
-        android:textColor="@color/design_default_color_error"
+        android:text="Discordo"
+        android:textColor="@color/material_dynamic_primary60"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintHorizontal_bias="0.067"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/alertdialog" />
+
+    <Button
+        android:id="@+id/Conc"
+        android:layout_width="189dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00000000"
+        android:text="Concordo"
+        android:textColor="@color/material_dynamic_primary60"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alertdialog" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

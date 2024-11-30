@@ -33,6 +33,22 @@ class Login : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
+        if (email.text.isNullOrEmpty() || password.text.isNullOrEmpty()){
+            showEmptyAlert()
+        }
+    }
+
+
+    private fun showEmptyAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Campos vazios")
+        builder.setMessage("Por favor, preencha todos os campos.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val AlertDialog = builder.create()
+        AlertDialog.show()
     }
 
 }

@@ -40,9 +40,15 @@ class MainActivity :
         alert.show()
 
 
-        val button = customView.findViewById<Button>(R.id.button5)
+        val button = customView.findViewById<Button>(R.id.Conc)
         button.setOnClickListener {
             alert.dismiss()
+        }
+
+        val button1 = customView.findViewById<Button>(R.id.Disc)
+        button1.setOnClickListener {
+            val intent: Intent = Intent(this, Login::class.java)
+            startActivity(intent)
         }
 
 
