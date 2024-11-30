@@ -39,6 +39,7 @@ class MainActivity :
         val alert = builder.create()
         alert.show()
 
+
         val button = customView.findViewById<Button>(R.id.button5)
         button.setOnClickListener {
             alert.dismiss()

@@ -25,13 +25,13 @@ class Login : AppCompatActivity() {
             val intent: Intent = Intent(this, CriarConta::class.java)
             startActivity(intent)
         }
-       /* if (!email.text.isNullOrEmpty()){
+        if (!email.text.isNullOrEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
         }
 
         if (!password.text.isNullOrEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
-        } */
+        }
 
     }
 
