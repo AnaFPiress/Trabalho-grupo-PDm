@@ -92,7 +92,7 @@ class apresentacaoPDM : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
-                val json = """{"texto": "$texto"}"""
+                val json = "{\"texto\": \"$texto\"}"
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
                     .post(requestBody)
