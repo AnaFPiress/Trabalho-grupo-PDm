@@ -38,29 +38,29 @@ class apresentacaoPDM : AppCompatActivity() {
         button.setOnClickListener {
             val text = editText.text.toString()
             postDB(text,textView)
-
-
-
-
         }
-
-
     }
 
-    fun getDB(text:TextView)  {
+
+    /*
+    funcao que recebe uma textView e faz um get a api
+    lanca uma coroutina e faz um request
+    utilizando okhttp client com o url http://nebula-env.com:8086/query
+    executa o request e pega o dados returnados no body
+    converte num JSONArray e muda o texto da textView para o ultimo na tabela
+     */
+    private fun getDB(text:TextView)  {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
                 val request = Request.Builder()
                     .url("http://nebula-env.com:8086/query")
                     .build()
-
                 val response: Response = client.newCall(request).execute()
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
                     val jsonArray = JSONArray(responseData)
-
                     for (i in 0 until  jsonArray.length()) {
                         //println(jsonArray.length())
                         if (i == jsonArray.length() -1) {
@@ -70,7 +70,6 @@ class apresentacaoPDM : AppCompatActivity() {
                         }else{
                             continue
                         }
-
                     }
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
@@ -82,7 +81,13 @@ class apresentacaoPDM : AppCompatActivity() {
         }
     }
 
-
+    /*
+    funcao que recebe uma string e uma textView e faz um post a api
+    lanca uma coroutina e faz um request utilizando okhttp client
+    com o url http://nebula-env.com:8086/post
+    manda o texto recebido no body em formato json
+    chama a funcao getDB para atualizar a textView
+     */
     private fun postDB(texto: String, textView: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -94,13 +99,13 @@ class apresentacaoPDM : AppCompatActivity() {
                     .url("http://nebula-env.com:8086/post")
                     .build()
                 val response: Response = client.newCall(request).execute()
-                val responseData = response.body?.string()
+                //val responseData = response.body?.string()
 
                 if (response.isSuccessful) {
                     Log.d("success", "Request successful: ${response.message}")
                     getDB(textView)
                 } else {
-                    Log.d("error", "Request failed: ${response.message}, Response data: $responseData")
+                    Log.d("error", "Request failed: ${response.message}")
 
                 }
             } catch (e: Exception) {

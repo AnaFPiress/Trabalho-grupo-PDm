@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- permissoes de internet -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!--  utilizar o ficheiro criado networkSecurityConfig.xml -->
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
