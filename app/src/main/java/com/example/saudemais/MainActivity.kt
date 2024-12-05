@@ -18,7 +18,7 @@ class MainActivity :
         setContentView(R.layout.activity_main)
 
         // Exibe o alerta na tela
-        showCustomAlertDialog()
+        //showCustomAlertDialog()
 
         val login: Button = findViewById(R.id.login)
 

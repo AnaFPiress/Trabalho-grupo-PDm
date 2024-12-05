@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+
 import org.json.JSONArray
 
 class apresentacaoPDM : AppCompatActivity() {
@@ -25,11 +27,6 @@ class apresentacaoPDM : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_apresentacao_pdm)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         val button = findViewById<Button>(R.id.button5)
         val editText = findViewById<EditText>(R.id.editTextText)
@@ -56,7 +53,7 @@ class apresentacaoPDM : AppCompatActivity() {
                 val request = Request.Builder()
                     .url("http://nebula-env.com:8086/query")
                     .build()
-                val response: Response = client.newCall(request).execute()
+                val response = client.newCall(request).execute()
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
