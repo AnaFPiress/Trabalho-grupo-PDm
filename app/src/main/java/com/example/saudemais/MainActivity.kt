@@ -21,9 +21,14 @@ class MainActivity :
         //showCustomAlertDialog()
 
         val login: Button = findViewById(R.id.login)
-
+        val criarConta = findViewById<Button>(R.id.CriarConta)
         login.setOnClickListener() {
             val intent: Intent = Intent(this, Login::class.java)
+            startActivity(intent)
+        }
+
+        criarConta.setOnClickListener(){
+            val intent : Intent = Intent(this, CriarConta::class.java)
             startActivity(intent)
         }
     }

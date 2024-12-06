@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">SaudeMais</string>
-    <string name="title_activity_mapa">Mapa</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
@@ -12,7 +11,6 @@
     <string name="alergias">Alergias</string>
     <string name="quadro_clinico">Quadro Clinico</string>
     <string name="seguinte">Seguinte</string>
-    <string name="disclaimer">Qualquer diagnóstico encontra-se sujeito a avaliação médica!</string>
     <string name="altura">Altura</string>
     <string name="criar_conta">Criar Conta</string>
     <string name="login">Login</string>
