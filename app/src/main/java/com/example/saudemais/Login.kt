@@ -3,6 +3,7 @@ package com.example.saudemais
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -13,20 +14,27 @@ class Login : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val email = findViewById<TextInputLayout>(R.id.email).editText
-        val password = findViewById<TextInputLayout>(R.id.password).editText
+        val emailL = findViewById<TextInputLayout>(R.id.email)
+        val email = emailL.editText
+        val passwordL = findViewById<TextInputLayout>(R.id.password)
+        val password = passwordL.editText
         val button = findViewById<Button>(R.id.button)
         val button2 = findViewById<Button>(R.id.button2)
 
-        if (email?.text.toString().isEmpty() || password?.text.toString().isEmpty()){
+    /*    if (email?.text.toString().isEmpty() || password?.text.toString().isEmpty()){
             showEmptyAlert() //substituir pois quando abre pela primeira vez aparece logo(maybe Toast)
-        }
+        }*/
         button.setOnClickListener() {
-            if (checkEmail(email?.text.toString()) && checkPassword(password?.text.toString())) {
-                val intent: Intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+            if(email?.text.toString().isEmpty() || password?.text.toString().isEmpty() ){
+                emailL.error = "vazio"
+                passwordL.error = "vazio"
             }else{
-                Toast.makeText(this,"cria conta",Toast.LENGTH_SHORT).show()
+                if (true/*checkEmail(email?.text.toString()) && checkPassword(password?.text.toString())*/) {
+                    val intent: Intent = Intent(this, Sintomas::class.java)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(this,"cria conta",Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -35,10 +43,8 @@ class Login : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
     private fun checkPassword(pass: String): Boolean {
         TODO("Not yet implemented")
-
     }
 
     private fun checkEmail (email:String): Boolean {
