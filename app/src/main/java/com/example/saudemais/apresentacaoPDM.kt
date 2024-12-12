@@ -111,5 +111,45 @@ class apresentacaoPDM : AppCompatActivity() {
         }
     }
 
+    /*
+Função para enviar os sintomas para a API e exibir as doenças retornadas
+Lança uma corrotina para realizar o POST usando OkHttp.
+*/
+private fun postSintomas(sintomas: String, textView: TextView) {
+    CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val client = OkHttpClient()
+            val json = "{\"sintomas\": \"$sintomas\"}"
+            val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+            val request = Request.Builder()
+                .post(requestBody)
+                .url("http://nebula-env.com:8086/sintomas")
+                .build()
+            val response: Response = client.newCall(request).execute()
+            val responseData = response.body?.string()
+
+            if (response.isSuccessful && responseData != null) {
+                val jsonArray = JSONArray(responseData)
+                val diseasesList = mutableListOf<String>()
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    diseasesList.add(jsonObject.getString("doenca"))
+                }
+                val diseasesText = diseasesList.joinToString(separator = "\n")
+
+                runOnUiThread {
+                    textView.text = diseasesText
+                }
+            } else {
+                Log.d("error", "Request failed: ${response.message}")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.d("error", e.toString())
+        }
+    }
+}
+
+
 
 }
