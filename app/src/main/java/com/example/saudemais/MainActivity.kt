@@ -1,15 +1,23 @@
 package com.example.saudemais
 
 
+import android.content.Context
 import com.example.saudemais.R
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity :
     AppCompatActivity() {
@@ -17,18 +25,40 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         // Exibe o alerta na tela
         //showCustomAlertDialog()
+        val id = intent.getStringExtra("id")
+        val nome = intent.getStringExtra("name")
+        //Log.d("dasd",nome.toString())
+        val tv = findViewById<TextView>(R.id.Nome)
+        val p :String = "Bem Vindo, $nome!"
+        tv.text = p
+        val button = findViewById<FloatingActionButton>(R.id.button6)
+        //val auto = findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView2)
+        //val arrayAdapter: ArrayAdapter<String>
+        //val sintomasArray = resources.getStringArray(R.array.sintomas)
+        //arrayAdapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_activated_1,sintomasArray)
+        //auto.setAdapter(arrayAdapter)
 
-        val login: Button = findViewById(R.id.login)
+
+
+        val sintomas: Button = findViewById(R.id.login)
         val criarConta = findViewById<Button>(R.id.CriarConta)
-        login.setOnClickListener() {
-            val intent: Intent = Intent(this, Login::class.java)
+        sintomas.setOnClickListener() {
+            val intent: Intent = Intent(this, Sintomas::class.java)
+            intent.putExtra("id",id)
             startActivity(intent)
         }
 
         criarConta.setOnClickListener(){
-            val intent : Intent = Intent(this, CriarConta::class.java)
+            val intent : Intent = Intent(this, teste::class.java)
+            startActivity(intent)
+        }
+        button.setOnClickListener(){
+            val intent:Intent = Intent(this,Perfil::class.java)
+            intent.putExtra("id",id)
             startActivity(intent)
         }
     }
@@ -56,7 +86,6 @@ class MainActivity :
             val intent: Intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
-
 
     }
 }

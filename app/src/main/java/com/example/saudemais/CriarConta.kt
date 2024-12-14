@@ -1,5 +1,6 @@
 package com.example.saudemais
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,8 +9,19 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import org.json.JSONArray
+import org.json.JSONObject
 
 class CriarConta : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,13 +132,48 @@ class CriarConta : AppCompatActivity() {
                             .show()
                         //println(cont)
                         // funcao aqui para adicoinar a db
-                        finish()
+                        val nomeF = nome!!.text.toString().plus(" ").plus(nome2!!.text.toString())
+                        showCustomAlertDialog(nomeF,pass!!.text.toString(),email!!.text.toString(),idade!!.text.toString(),peso!!.text.toString().toFloat(),altura!!.text.toString().toFloat(),genero!!.text.toString(),alergias!!.text.toString(),doencas!!.text.toString())
+
                     }
                 }
             }
         }
     }
 
+    // Metodo para criar conta
+    fun createAccount(username: String, password: String, email: String,idade:String, peso :Float, altura :Float,genero: String,alergias:String, doencas:String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val client = OkHttpClient()
+                val json = JSONArray(arrayOf(username, password, email, peso, altura, idade, genero, alergias, doencas)).toString()
+
+                val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                val request = Request.Builder()
+                    .post(requestBody)
+                    .url("http://nebula-env.com:8086/register")
+                    .build()
+
+                val response: Response = client.newCall(request).execute()
+                val responseData = response.body?.string()
+
+                if (response.isSuccessful && responseData != null) {
+                    Log.d("success", "Account created: $responseData")
+                    //textView.text = "Conta criada com sucesso!"
+                    finish()
+                } else {
+                    Log.d("error", "Account creation failed: ${response.message}")
+                    Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                    //textView.text = "Erro ao criar conta: ${response.message}"
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("error", e.toString())
+                Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                //textView.text = "Erro ao criar conta: ${e.message}"
+            }
+        }
+    }
     private fun checkPass(pass: String): Boolean {
         val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=\\S+\$).{8,}\$")
         //Log.d("teste", "olha aqyu")
@@ -142,5 +189,33 @@ class CriarConta : AppCompatActivity() {
         } else {
             generoL.error = null
         }
+    }
+
+
+    private fun showCustomAlertDialog(nomeF: String,pass:String,email:String,idade:String,peso:Float,altura:Float,genero:String,alergias:String,doencas:String) {
+        // criação do alerta
+        val builder = AlertDialog.Builder(this)
+        builder.setCancelable(false)
+
+        val customView = layoutInflater.inflate(R.layout.popup, null)
+        builder.setView(customView)
+
+        val alert = builder.create()
+        alert.show()
+
+
+        val button = customView.findViewById<Button>(R.id.Conc)
+        button.setOnClickListener {
+            alert.dismiss()
+            createAccount(nomeF,pass,email,idade,peso,altura,genero,alergias,doencas)
+            finish()
+        }
+
+        // botao discordar
+        val button1 = customView.findViewById<Button>(R.id.Disc)
+        button1.setOnClickListener {
+           Toast.makeText(this,"Tem de aceitar",Toast.LENGTH_SHORT).show()
+        }
+
     }
 }

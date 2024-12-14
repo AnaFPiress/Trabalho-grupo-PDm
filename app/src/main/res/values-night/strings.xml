@@ -14,4 +14,7 @@
     <string name="altura">Altura</string>
     <string name="criar_conta">Criar Conta</string>
     <string name="login">Login</string>
+    <string name="novo_nome">Novo Nome</string>
+    <string name="diagn_stico">Diagnóstico</string>
+    <string name="ver_hospitais_pr_ximos">Ver Hospitais Próximos</string>
 </resources>

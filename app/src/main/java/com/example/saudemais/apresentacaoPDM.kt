@@ -7,9 +7,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +24,7 @@ class apresentacaoPDM : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_apresentacao_pdm)
 
+        val array = arrayOf("param1", "param2", "param3", "10.0f", "10.0f", "param6", "param7", "param8", "param9")
         val button = findViewById<Button>(R.id.button5)
         val editText = findViewById<EditText>(R.id.editTextText)
         val textView = findViewById<TextView>(R.id.textView)
@@ -34,6 +32,7 @@ class apresentacaoPDM : AppCompatActivity() {
         button.setOnClickListener {
             val text = editText.text.toString()
             postDB(text,textView)
+            //postDB2(array,textView)
         }
     }
 
@@ -111,45 +110,35 @@ class apresentacaoPDM : AppCompatActivity() {
         }
     }
 
-    /*
-Função para enviar os sintomas para a API e exibir as doenças retornadas
-Lança uma corrotina para realizar o POST usando OkHttp.
-*/
-private fun postSintomas(sintomas: String, textView: TextView) {
-    CoroutineScope(Dispatchers.IO).launch {
-        try {
-            val client = OkHttpClient()
-            val json = "{\"sintomas\": \"$sintomas\"}"
-            val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-            val request = Request.Builder()
-                .post(requestBody)
-                .url("http://nebula-env.com:8086/sintomas")
-                .build()
-            val response: Response = client.newCall(request).execute()
-            val responseData = response.body?.string()
+    private fun postDB2(array: Array<String>, textView: TextView) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val client = OkHttpClient()
+                //val json = "{\"texto\": \"$texto\"}"
+                val json = JSONArray(array).toString()
+                Log.d("debug", "JSON Payload: $json")
+                val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+                val request = Request.Builder()
+                    .post(requestBody)
+                    .url("http://nebula-env.com:8086/login")
+                    .build()
+                val response: Response = client.newCall(request).execute()
+                val responseData = response.body?.string()
+                println(responseData)
+                println(response.message)
+                if (response.isSuccessful) {
+                    Log.d("success", "Request successful: ${response.message}")
+                    getDB(textView)
+                } else {
+                    Log.d("error", "Request failed: ${response.message}")
 
-            if (response.isSuccessful && responseData != null) {
-                val jsonArray = JSONArray(responseData)
-                val diseasesList = mutableListOf<String>()
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject = jsonArray.getJSONObject(i)
-                    diseasesList.add(jsonObject.getString("doenca"))
                 }
-                val diseasesText = diseasesList.joinToString(separator = "\n")
-
-                runOnUiThread {
-                    textView.text = diseasesText
-                }
-            } else {
-                Log.d("error", "Request failed: ${response.message}")
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("error", e.toString())
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.d("error", e.toString())
         }
     }
-}
-
 
 
 }

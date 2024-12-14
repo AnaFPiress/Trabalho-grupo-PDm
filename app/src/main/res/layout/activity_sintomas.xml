@@ -20,9 +20,12 @@
         app:counterMaxLength="100"
         app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:hint="@string/sintoma"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -40,9 +43,10 @@
         app:counterMaxLength="100"
         app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:hint="@string/sintoma"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -60,9 +64,10 @@
         app:counterMaxLength="100"
         app:errorEnabled="true">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:hint="@string/sintoma"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -82,11 +87,13 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="204dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="144dp"
         android:text="Seguinte"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sintoma3" />
 
     <TextView
         android:id="@+id/textView3"
