@@ -113,7 +113,7 @@ Lança uma corrotina para realizar o POST usando OkHttp.
                     .addHeader("sint2",sintomas1)
                     .addHeader("sint3",sintomas2)
                     .addHeader("id",id)
-                    .url("http://nebula-env.com:8086/queryDoenca")//?sintomas=$encodedJson
+                    .url("http://nebula-env.com:8086/queryDoenca")
                     .build()
                 val response: Response = client.newCall(request).execute()
                 val responseData = response.body?.string()
