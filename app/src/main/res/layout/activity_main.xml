@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
         android:src="@drawable/round_person_24"
+        android:backgroundTint="#01AAC7"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/Nome"
         app:layout_constraintEnd_toEndOf="parent"
