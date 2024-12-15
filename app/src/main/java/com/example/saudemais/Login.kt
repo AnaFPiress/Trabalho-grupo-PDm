@@ -23,7 +23,6 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
         val tv = findViewById<TextView>(R.id.textView3)
         val emailL = findViewById<TextInputLayout>(R.id.email)
         val email = emailL.editText
@@ -58,15 +57,12 @@ class Login : AppCompatActivity() {
             try {
                 val rsaEncryptionHelper = RSAEncryptionHelper(this@Login)
                 val client = OkHttpClient()
-                val array = arrayOf(username,rsaEncryptionHelper.encrypt(password))
                 val a = rsaEncryptionHelper.encrypt(password)
-                //Log.d("rar",rsaEncryptionHelper.decrypt(password))
-                //val json = JSONArray(array).toString()
-
                 val json ="{\"nome\": \"$username\",\"pass\": \"$a\"}"
-                Log.d("tatata",json)
+                //Log.d("tatata",json)
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
+                    .addHeader("nome",username)
                     .addHeader("pass2",a)
                     .post(requestBody)
                     .url("http://nebula-env.com:8086/login")
@@ -76,17 +72,17 @@ class Login : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    Log.d("success", "Login successful: $responseData")
+                    //Log.d("success", "Login successful: $responseData")
                     //textView.text = "Login realizado com sucesso!"
                     val jsonArray = JSONArray(responseData)
                     val nome = arrayListOf<String>()
                     for (i in 0 until 1) {
                         val jsonObject = jsonArray.getJSONObject(i)
-                        Log.d("taata",jsonObject.getString("password"))
+                       // Log.d("taata",jsonObject.getString("password"))
                         nome.add(jsonObject.getString("id_nome"))
                         nome.add(jsonObject.getString("nome"))
                     }
-                    Log.d("das",nome.toString())
+                    //Log.d("das",nome.toString())
                     intent.putExtra("id",nome[0])
                     intent.putExtra("name",nome[1])
                     startActivity(intent)
@@ -94,30 +90,16 @@ class Login : AppCompatActivity() {
                     Log.d("error", "Login failed: ${response.message}")
                     runOnUiThread(){
                     Toast.makeText(this@Login,"erro login",Toast.LENGTH_SHORT).show()
+                    }
                 }
-                    //extView.text = "Erro no login: ${response.message}" // pop up maybe?
-                }
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.d("error", e.toString())
-                //textView.text = "Erro no login: ${e.message}"
                 runOnUiThread() {
                     Toast.makeText(this@Login, "erro login", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-    }
-    private fun showEmptyAlert() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Campos vazios")
-        builder.setMessage("Por favor, preencha todos os campos.")
-        builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        val AlertDialog = builder.create()
-        AlertDialog.show()
     }
 
 }

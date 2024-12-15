@@ -50,9 +50,8 @@ class Doencas : AppCompatActivity() {
         val a2 = id!!.split("\n")
         println(a2.size)
 
-        val array = mutableListOf<String>()
         for (i in a2.indices) {
-            getTrat(a2[i],array, tv1,a2.size)
+            getTrat(a2[i], tv1)
         }
         button.setOnClickListener(){
             if(ContextCompat.checkSelfPermission(this,CALL_PHONE) == PackageManager.PERMISSION_GRANTED){
@@ -73,15 +72,10 @@ class Doencas : AppCompatActivity() {
     }
 
 
-    private fun getTrat(id: String,array: MutableList<String>, tv:TextView,size:Int){
+    private fun getTrat(id: String, tv:TextView){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
-                //val json = "{\"sintomas\": \"$sintomas\"}"
-                val json = id.toString()
-                val encodedJson = java.net.URLEncoder.encode(json, "UTF-8")
-                Log.d("json", json)
-                val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
                     .addHeader("id",id)
                     .url("http://nebula-env.com:8086/trat")
@@ -102,7 +96,6 @@ class Doencas : AppCompatActivity() {
                     //val diseasesText2 = diseasesList2[0]
                     Log.d("doencas", diseasesText)
                     tv.text = diseasesText
-
                     //tv1.text = diseasesText2
                 } else {
                     Log.d("error", "Request failed: ${response.message}")

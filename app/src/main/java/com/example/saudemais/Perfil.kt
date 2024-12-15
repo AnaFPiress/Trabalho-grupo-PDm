@@ -21,8 +21,15 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import org.json.JSONArray
 
 class Perfil : AppCompatActivity() {
+    private  lateinit var tv: TextView
+    private lateinit var tv1 :TextView
+    private lateinit var tv2 :TextView
+    private lateinit var tv3 :TextView
+    private lateinit var tv4:TextView
+    private lateinit var tv5 :TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,23 +47,28 @@ class Perfil : AppCompatActivity() {
         val pass = findViewById<Button>(R.id.pass)
         val dados = findViewById<Button>(R.id.dados)
         val doencas = findViewById<Button>(R.id.doencas)
-        val tv =findViewById<TextView>(R.id.user)
+        tv =findViewById<TextView>(R.id.user)
+        tv1 = findViewById<TextView>(R.id.tvNome)
+        tv2 = findViewById<TextView>(R.id.tvPeso)
+        tv3 = findViewById<TextView>(R.id.tvAltura)
+        tv4 = findViewById<TextView>(R.id.tvGenero)
+        tv5 =  findViewById<TextView>(R.id.tvIdade)
         //chamar funcao para aparecer no inicio os dados do user
-        getUser(id!!,tv)
+        getUser(id!!)
         nome.setOnClickListener() {
-            button(id)
+            button(id,tv)
         }
         email.setOnClickListener() {
-            button2(id)
+            button2(id,tv)
         }
         pass.setOnClickListener() {
-            button3(id)
+            button3(id,tv)
         }
         dados.setOnClickListener() {
-            button4(id)
+            button4(id,tv)
         }
         doencas.setOnClickListener() {
-            button5(id)
+            button5(id,tv)
         }
 
         //botao de logout com o limpar da stack de views
@@ -75,7 +87,14 @@ class Perfil : AppCompatActivity() {
   se tiver sucesso entao aparece muda a textView para ter os dados do utilizador
   caso contrario erro
    */
-    private fun getUser(id: String,textView: TextView) {
+    private fun getUser(id: String) {
+        var nome:String? = null
+        var peso:String? = null
+        var altura:String? = null
+        var dataNas:String? = null
+        var genero:String? = null
+        var alergias:String? = null
+        var doencas:String? = null
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -87,7 +106,38 @@ class Perfil : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    textView.text = responseData
+                    val jsonArray = JSONArray(responseData)
+
+
+                    for (i in 0 until jsonArray.length()) {
+
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        nome = jsonObject.getString("nome")
+                        Log.d("hgvyu",nome.toString())
+                        peso = jsonObject.getString("peso")
+                        altura = jsonObject.getString("altura")
+                        dataNas = jsonObject.getString("dataNas")
+                        genero = jsonObject.getString("genero")
+                        alergias = jsonObject.getString("alergias")
+                        doencas = jsonObject.getString("quadro")
+                        Log.d("hgvyu",peso.toString())
+                        Log.d("hgvyu",altura.toString())
+                        Log.d("hgvyu",genero.toString())
+                        Log.d("hgvyu",dataNas.toString())
+
+                    }
+                    //Log.d("doencas",nome!!)
+                   // Log.d("fadfads",responseData)
+
+                    val textoMeio = alergias +"\n" + doencas
+
+                    tv.text = textoMeio
+                    tv1.text = nome
+                    tv2.text = peso
+                    tv3.text = altura
+                    tv4.text = genero
+                    tv5.text = dataNas
+
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                 }
@@ -121,7 +171,7 @@ funcao para aparecer o popup para o utilizador mudar  o nome
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun button(id: String){
+    private fun button(id: String,tv: TextView){
             //faz o dialog do nome da lista
             val builder = AlertDialog.Builder(this)
             val inflater = layoutInflater
@@ -131,7 +181,7 @@ caso contrario erro
                 setTitle("Nome")
                 setPositiveButton("Ok") { dialog, which ->
                     if (editTextDialog.text.toString().isNotEmpty()) {
-                        changeNome(id, editTextDialog.text.toString())
+                        changeNome(id, editTextDialog.text.toString(),tv)
                         Toast.makeText(context, "nome alterado", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "add nome ", Toast.LENGTH_SHORT).show()
@@ -153,7 +203,7 @@ funcao para aparecer o popup para o utilizador mudar  o email
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun button2(id: String){
+    private fun button2(id: String,textView: TextView){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -163,7 +213,7 @@ caso contrario erro
             setTitle("Email")
             setPositiveButton("Ok") { dialog, which ->
                 if (editTextDialog.text.toString().isNotEmpty()) {
-                    changeEmail(id, editTextDialog.text.toString())
+                    changeEmail(id, editTextDialog.text.toString(),textView)
                     Toast.makeText(context, "email alterado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "add email ", Toast.LENGTH_SHORT).show()
@@ -184,7 +234,7 @@ funcao para aparecer o popup para o utilizador mudar a password
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun button3(id: String){
+    private fun button3(id: String,textView: TextView){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -203,7 +253,7 @@ caso contrario erro
                         Toast.makeText(context, "add password ", Toast.LENGTH_SHORT).show()
                         //Log.d("teste", "text: ${pass} ,error: ${pass2L.error} ,regex: ${pass.matches(regex)} ;tam: ${pass.length}")
                     } else {
-                        changePass(id, pass!!.text.toString())
+                        changePass(id, pass!!.text.toString(),textView)
                         Toast.makeText(context, "password alterado", Toast.LENGTH_SHORT).show()
                     }
                 } else {
@@ -225,7 +275,7 @@ funcao para aparecer o popup para o utilizador mudar os dados
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun button4(id: String){
+    private fun button4(id: String,textView: TextView){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -243,7 +293,7 @@ caso contrario erro
             setTitle("dados Lista")
             setPositiveButton("Ok") { dialog, which ->
                 if (idade?.text.toString().isNotEmpty() && peso?.text.toString().isNotEmpty() && altura?.text.toString().isNotEmpty() &&genero?.text.toString().isNotEmpty()) {
-                    changeDados(id, idade!!.text.toString(), peso!!.text.toString(), altura!!.text.toString(), genero!!.text.toString())
+                    changeDados(id, idade!!.text.toString(), peso!!.text.toString(), altura!!.text.toString(), genero!!.text.toString(),textView)
                     Toast.makeText(context, "dados alterado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "add dados ", Toast.LENGTH_SHORT).show()
@@ -265,7 +315,7 @@ funcao para aparecer o popup para o utilizador mudar as doencas
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
  */
-    private fun button5(id: String){
+    private fun button5(id: String,textView: TextView){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -278,7 +328,7 @@ caso contrario erro
             setTitle("doencas Lista")
             setPositiveButton("Ok") { dialog, which ->
                 if (alergias?.text.toString().isNotEmpty() && doencas?.text.toString().isNotEmpty()) {
-                    changeDoencas(id, alergias!!.text.toString(),doencas!!.text.toString())
+                    changeDoencas(id, alergias!!.text.toString(),doencas!!.text.toString(),textView)
                     Toast.makeText(context, "doencas alterado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "add doencas ", Toast.LENGTH_SHORT).show()
@@ -300,7 +350,7 @@ funcao para ligar a API e  mudar  o nome de um utilizador
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
  */
-    private fun changeNome(id:String, nome:String) {
+    private fun changeNome(id:String, nome:String,tv: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -317,6 +367,7 @@ caso contrario erro
                 if (response.isSuccessful && responseData != null) {
                     runOnUiThread() {
                         Toast.makeText(this@Perfil, "Nome Alterado", Toast.LENGTH_SHORT).show()
+                       getUser(id )
                     }
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
@@ -336,7 +387,7 @@ funcao para ligar a API e  mudar o email de um utilizador
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun changeEmail(id:String, nome:String) {
+    private fun changeEmail(id:String, nome:String,tv: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -352,6 +403,7 @@ caso contrario erro
 
                 if (response.isSuccessful && responseData != null) {
                     Toast.makeText(this@Perfil,"Email Alterado",Toast.LENGTH_SHORT).show()
+                    getUser(id,)
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                     Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
@@ -369,7 +421,7 @@ funcao para ligar a API e  mudar a password de um utilizador
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
 */
-    private fun changePass(id:String, pass:String) {
+    private fun changePass(id:String, pass:String,tv: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -385,6 +437,7 @@ caso contrario erro
 
                 if (response.isSuccessful && responseData != null) {
                     Toast.makeText(this@Perfil,"Password Alterado",Toast.LENGTH_SHORT).show()
+                    getUser( id!!)
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                     Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
@@ -405,7 +458,7 @@ funcao para ligar a API e  mudar as dados de um utilizador
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
  */
-    private fun changeDados(id: String, idade: String, peso: String, altura: String, genero: String) {
+    private fun changeDados(id: String, idade: String, peso: String, altura: String, genero: String,tv: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -421,6 +474,7 @@ caso contrario erro
 
                 if (response.isSuccessful && responseData != null) {
                     Toast.makeText(this@Perfil,"Dados Alterado",Toast.LENGTH_SHORT).show()
+                    getUser(id)
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                     Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
@@ -439,7 +493,7 @@ caso contrario erro
 se tiver sucesso entao aparece um toast com uma mensagem de sucesso
 caso contrario erro
      */
-    private fun changeDoencas(id:String, alergias:String,doencas: String) {
+    private fun changeDoencas(id:String, alergias:String,doencas: String,tv: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
@@ -455,6 +509,7 @@ caso contrario erro
 
                 if (response.isSuccessful && responseData != null) {
                     Toast.makeText(this@Perfil,"Doencas Alteradas",Toast.LENGTH_SHORT).show()
+                    getUser(id)
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                     Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()

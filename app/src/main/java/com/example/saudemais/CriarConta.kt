@@ -140,7 +140,7 @@ class CriarConta : AppCompatActivity() {
     }
 
     // Metodo para criar conta
-    fun createAccount(username: String, password: String, email: String,idade:String, peso :Float, altura :Float,genero: String,alergias:String, doencas:String) {
+    private fun createAccount(username: String, password: String, email: String,idade:String, peso :Float, altura :Float,genero: String,alergias:String, doencas:String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val rsaEncryptionHelper = RSAEncryptionHelper(this@CriarConta)
@@ -157,20 +157,22 @@ class CriarConta : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    Log.d("success", "Account created: $responseData")
-                    //textView.text = "Conta criada com sucesso!"
+                    //Log.d("success", "Account created: $responseData")
+                    runOnUiThread(){
+                        Toast.makeText(this@CriarConta,"Conta criada!",Toast.LENGTH_SHORT).show()
+                    }
                     finish()
                 } else {
                     Log.d("error", "Account creation failed: ${response.message}")
-                    Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
-                    //textView.text = "Erro ao criar conta: ${response.message}"
+                    runOnUiThread(){
+                        Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.d("error", e.toString())
                 runOnUiThread(){
                     Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
-                    //textView.text = "Erro ao criar conta: ${e.message}"
                 }
             }
         }
