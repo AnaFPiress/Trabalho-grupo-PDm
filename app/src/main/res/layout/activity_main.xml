@@ -7,12 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="57dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
         android:id="@+id/Nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="104dp"
         android:text="Nome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="45dp"
+        android:backgroundTint="#01AAC7"
         android:layout_marginBottom="160dp"
         android:text="@string/diagn_stico"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,6 +44,7 @@
         android:id="@+id/CriarConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#01AAC7"
         android:layout_marginBottom="160dp"
         android:text="@string/ver_hospitais_pr_ximos"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,11 +58,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="56dp"
+        android:src="@drawable/round_person_24"
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/Nome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Nome"
-        app:layout_constraintVertical_bias="0.486"
-        android:src="@drawable/round_person_24"/>
+        app:layout_constraintVertical_bias="0.54" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
