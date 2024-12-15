@@ -41,6 +41,7 @@ class Perfil : AppCompatActivity() {
         val dados = findViewById<Button>(R.id.dados)
         val doencas = findViewById<Button>(R.id.doencas)
         val tv =findViewById<TextView>(R.id.user)
+        //chamar funcao para aparecer no inicio os dados do user
         getUser(id!!,tv)
         nome.setOnClickListener() {
             button(id)
@@ -58,6 +59,7 @@ class Perfil : AppCompatActivity() {
             button5(id)
         }
 
+        //botao de logout com o limpar da stack de views
         logout.setOnClickListener() {
             val intent: Intent = Intent(this, Login::class.java,)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -66,7 +68,13 @@ class Perfil : AppCompatActivity() {
 
         }
     }
-
+    /*
+  funcao para ligar a API e  obter os dados de um utilizadro
+  consoante o numero de id do utilizadro
+  @params id utilizador
+  se tiver sucesso entao aparece muda a textView para ter os dados do utilizador
+  caso contrario erro
+   */
     private fun getUser(id: String,textView: TextView) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -79,10 +87,7 @@ class Perfil : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    runOnUiThread() {
-                        Toast.makeText(this@Perfil, "Nome Alterado", Toast.LENGTH_SHORT).show()
-                        textView.text = responseData
-                    }
+                    textView.text = responseData
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
                 }
@@ -93,7 +98,15 @@ class Perfil : AppCompatActivity() {
         }
     }
 
-
+    /*
+funcao para verificar se a password obdece a algumas regras
+tais como:
+8 letras minimo
+pelo menos uma 1 maiuscula, 1 minuscula, 1 numero e um
+dos seguintes simbolos @#$%^&+= e sem espacos brancos
+@params pass string com a password
+@returns Boolean true se sim, falso se nao
+*/
     private fun checkPass(pass: String): Boolean {
         val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=\\S+\$).{8,}\$")
         //Log.d("teste", "olha aqyu")
@@ -101,7 +114,13 @@ class Perfil : AppCompatActivity() {
         return pass.matches(regex)
 
     }
-
+    /*
+funcao para aparecer o popup para o utilizador mudar  o nome
+@params id utilizador
+é chamada a funcao changeNome com os inputs do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun button(id: String){
             //faz o dialog do nome da lista
             val builder = AlertDialog.Builder(this)
@@ -127,7 +146,13 @@ class Perfil : AppCompatActivity() {
             }
         }
 
-
+    /*
+funcao para aparecer o popup para o utilizador mudar  o email
+@params id utilizador
+é chamada a funcao changeEmail com os inputs do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun button2(id: String){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
@@ -152,6 +177,13 @@ class Perfil : AppCompatActivity() {
 
         }
     }
+    /*
+funcao para aparecer o popup para o utilizador mudar a password
+@params id utilizador
+é chamada a funcao changePass com os inputs do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun button3(id: String){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
@@ -186,6 +218,13 @@ class Perfil : AppCompatActivity() {
 
         }
     }
+    /*
+funcao para aparecer o popup para o utilizador mudar os dados
+@params id utilizador
+é chamada a funcao changeDados com os inputs do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun button4(id: String){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
@@ -219,7 +258,13 @@ class Perfil : AppCompatActivity() {
         }
     }
 
-
+    /*
+funcao para aparecer o popup para o utilizador mudar as doencas
+@params id utilizador
+é chamada a funcao changeDoencas com os inputs do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+ */
     private fun button5(id: String){
         //faz o dialog do nome da lista
         val builder = AlertDialog.Builder(this)
@@ -237,6 +282,7 @@ class Perfil : AppCompatActivity() {
                     Toast.makeText(context, "doencas alterado", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(context, "add doencas ", Toast.LENGTH_SHORT).show()
+
                 }
             }
             setNegativeButton("Voltar") { dialog, _ ->
@@ -247,7 +293,13 @@ class Perfil : AppCompatActivity() {
 
         }
     }
-
+    /*
+funcao para ligar a API e  mudar  o nome de um utilizador
+@params id utilizador
+@params  nome string novo nome do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+ */
     private fun changeNome(id:String, nome:String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -268,6 +320,7 @@ class Perfil : AppCompatActivity() {
                     }
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
+                    Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -275,6 +328,14 @@ class Perfil : AppCompatActivity() {
             }
         }
     }
+
+    /*
+funcao para ligar a API e  mudar o email de um utilizador
+@params id utilizador
+@params  email string novo email
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun changeEmail(id:String, nome:String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -293,6 +354,7 @@ class Perfil : AppCompatActivity() {
                     Toast.makeText(this@Perfil,"Email Alterado",Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
+                    Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -300,6 +362,13 @@ class Perfil : AppCompatActivity() {
             }
         }
     }
+    /*
+funcao para ligar a API e  mudar a password de um utilizador
+@params id utilizador
+@params  password string nova password do utilzadro
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+*/
     private fun changePass(id:String, pass:String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -318,6 +387,7 @@ class Perfil : AppCompatActivity() {
                     Toast.makeText(this@Perfil,"Password Alterado",Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
+                    Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -325,6 +395,16 @@ class Perfil : AppCompatActivity() {
             }
         }
     }
+    /*
+funcao para ligar a API e  mudar as dados de um utilizador
+@params id utilizador
+@params idade string de nova data de nascimento
+@params  peso string com o novo peso do utilizador
+@params  altura string com o nova altura do utilizador
+@params  genero string com o novo genero do utilizador
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+ */
     private fun changeDados(id: String, idade: String, peso: String, altura: String, genero: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -343,6 +423,7 @@ class Perfil : AppCompatActivity() {
                     Toast.makeText(this@Perfil,"Dados Alterado",Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
+                    Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -350,6 +431,14 @@ class Perfil : AppCompatActivity() {
             }
         }
     }
+    /*
+    funcao para ligar a API e  mudar as doencas de um utilizador
+    @params id utilizador
+    @params alergias string de novas alergias
+    @params doencas string de novas doencas no quadro clinco
+se tiver sucesso entao aparece um toast com uma mensagem de sucesso
+caso contrario erro
+     */
     private fun changeDoencas(id:String, alergias:String,doencas: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -365,9 +454,10 @@ class Perfil : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    Toast.makeText(this@Perfil,"Nome Alterado",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Perfil,"Doencas Alteradas",Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
+                    Toast.makeText(this@Perfil,"Erro",Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -17,11 +17,8 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.parse
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONArray
 
@@ -57,10 +54,9 @@ class Sintomas : AppCompatActivity() {
         auto3.setAdapter(arrayAdapter)
 
 
-        button.setOnClickListener(){
-
+        button.setOnClickListener {
             if (sint1?.text.toString().isEmpty() && sint2?.text.toString().isEmpty() && sint3?.text.toString().isEmpty()){
-                Toast.makeText(this, "falta input", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Pelo menos 1 Sintoma", Toast.LENGTH_SHORT).show()
             }else  {
                 if (sint1!!.text.toString().length > sint1L.counterMaxLength){
                     checkTam(sint1,sint1L)
@@ -70,11 +66,9 @@ class Sintomas : AppCompatActivity() {
                     checkTam(sint3,sint3L)
                 }else {
                     val intent: Intent = Intent(this, Doencas::class.java)
-//                    Log.d("teste", sint1.text.toString())
-                    if (sint1.text.toString().isEmpty()) sint1.setText("");
-                    if (sint2.text.toString().isEmpty()) sint2.setText("");
-                    if (sint3.text.toString().isEmpty()) sint3.setText("");
-   //                 Log.d("teste", sint1.text.toString())
+                    if (sint1.text.toString().isEmpty()) sint1.setText("")
+                    if (sint2.text.toString().isEmpty()) sint2.setText("")
+                    if (sint3.text.toString().isEmpty()) sint3.setText("")
                     postSintomas(sint1.text.toString(),sint2.text.toString(),sint3.text.toString(),id!!,intent)
                 }
             }
@@ -95,6 +89,8 @@ class Sintomas : AppCompatActivity() {
             generoL.error = null
         }
     }
+
+
 
     /*
 Função para enviar os sintomas para a API e exibir as doenças retornadas
@@ -121,13 +117,16 @@ Lança uma corrotina para realizar o POST usando OkHttp.
                 if (response.isSuccessful && responseData != null) {
                     val jsonArray = JSONArray(responseData)
                     val diseasesList = mutableListOf<String>()
-                    for (i in 0 until 1) {
+                    val diseasesList2 = mutableListOf<String>()
+                    for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
-                        diseasesList.add(jsonObject.getString("id_doenca"))
+                        diseasesList2.add(jsonObject.getString("id_doenca"))
                         diseasesList.add(jsonObject.getString("name"))
                     }
+                    val diseasesText2 = diseasesList2.joinToString(separator = "\n")
                     val diseasesText = diseasesList.joinToString(separator = "\n")
                     Log.d("doencas", diseasesText)
+                    intent.putExtra("id",diseasesText2)
                     intent.putExtra("sintomas",diseasesText)
                     startActivity(intent)
                 } else {

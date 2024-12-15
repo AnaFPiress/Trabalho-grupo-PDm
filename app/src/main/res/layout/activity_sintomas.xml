@@ -35,13 +35,13 @@
         android:layout_width="202dp"
         android:layout_height="80dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sintoma1"
         app:counterEnabled="true"
         app:counterMaxLength="100"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@+id/sintoma1"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/sintoma1"
+        app:layout_constraintTop_toBottomOf="@+id/sintoma1">
 
         <AutoCompleteTextView
             android:id="@+id/autoComplete1"
@@ -56,13 +56,13 @@
         android:layout_width="202dp"
         android:layout_height="80dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sintoma2"
         app:counterEnabled="true"
         app:counterMaxLength="100"
-        app:errorEnabled="true">
+        app:errorEnabled="true"
+        app:layout_constraintEnd_toEndOf="@+id/sintoma2"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/sintoma2"
+        app:layout_constraintTop_toBottomOf="@+id/sintoma2">
 
         <AutoCompleteTextView
             android:id="@+id/autoComplete2"
@@ -74,8 +74,8 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="91dp"
+        android:layout_height="36dp"
         android:layout_marginTop="36dp"
         android:text="Sintomas"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,11 +88,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="144dp"
         android:text="Seguinte"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sintoma3"
+        app:layout_constraintStart_toStartOf="@+id/sintoma3"
         app:layout_constraintTop_toBottomOf="@+id/sintoma3" />
 
     <TextView

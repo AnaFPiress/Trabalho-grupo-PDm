@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -19,7 +18,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONArray
-import org.json.JSONObject
 
 class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +38,6 @@ class Login : AppCompatActivity() {
 
 
         button.setOnClickListener() {
-
             if(email?.text.toString().isEmpty() || password?.text.toString().isEmpty() ){
                 emailL.error = "vazio"
                 passwordL.error = "vazio"

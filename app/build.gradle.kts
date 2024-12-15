@@ -27,7 +27,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.saudemais"
-        minSdk = 21
+        buildConfigField("String", "MAPS_API_KEY", "\"${project.findProperty("MAPS_API_KEY")}\"")
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -53,6 +54,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -64,6 +66,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,5 +74,5 @@ dependencies {
     // import okhttp
     implementation(libs.okhttp)
     implementation(libs.play.services.maps)
-
+    implementation(libs.play.services.location)
 }

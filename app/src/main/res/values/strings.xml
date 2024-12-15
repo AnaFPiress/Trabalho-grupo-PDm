@@ -157,4 +157,5 @@
         <item>prognosis</item>
     </string-array>
     <string name="title_activity_teste">teste</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

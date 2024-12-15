@@ -1,6 +1,5 @@
 package com.example.saudemais
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,7 +20,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONArray
-import org.json.JSONObject
 
 class CriarConta : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -174,6 +172,16 @@ class CriarConta : AppCompatActivity() {
             }
         }
     }
+
+    /*
+funcao para verificar se a password obdece a algumas regras
+tais como:
+8 letras minimo
+pelo menos uma 1 maiuscula, 1 minuscula, 1 numero e um
+dos seguintes simbolos @#$%^&+= e sem espacos brancos
+@params pass string com a password
+@returns Boolean true se sim, falso se nao
+*/
     private fun checkPass(pass: String): Boolean {
         val regex = Regex("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=\\S+\$).{8,}\$")
         //Log.d("teste", "olha aqyu")
@@ -182,6 +190,13 @@ class CriarConta : AppCompatActivity() {
 
     }
 
+    /*
+funcao para verificar se o tamanho da string inroduzida no editText é
+maior q o permitido no Layout
+@params genero: EditText string introduzida pelo utilizador
+@params generoL: TextInputLayout Layout com o numero de carateres posiveis
+caso seja maiorr coloca o erro no layout, caso contrario o texto é  null
+*/
     private fun checkTam(genero: EditText, generoL: TextInputLayout) {
         if (genero.text.toString().length > generoL.counterMaxLength) {
             //Log.d("teste", "testedslknfisd")
