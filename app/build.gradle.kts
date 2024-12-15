@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.saudemais"
-        buildConfigField("String", "MAPS_API_KEY", "\"${project.findProperty("MAPS_API_KEY")}\"")
+        //buildConfigField("String", "MAPS_API_KEY", "\"${project.findProperty("MAPS_API_KEY")}\"")
         minSdk = 23
         targetSdk = 34
         versionCode = 1
@@ -54,7 +54,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        buildConfig = true
+        //buildConfig = true
     }
 }
 

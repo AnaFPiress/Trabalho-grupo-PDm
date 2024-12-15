@@ -1,14 +1,15 @@
 package com.example.saudemais
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity :
-    AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,7 +24,7 @@ class MainActivity :
 
         val button = findViewById<FloatingActionButton>(R.id.button6)
         val sintomas = findViewById<Button>(R.id.login)
-        val criarConta = findViewById<Button>(R.id.CriarConta)
+        val mapa = findViewById<Button>(R.id.CriarConta)
 
         sintomas.setOnClickListener() {
             val intent: Intent = Intent(this, Sintomas::class.java)
@@ -32,9 +33,11 @@ class MainActivity :
             startActivity(intent)
         }
 
-        criarConta.setOnClickListener(){
-            val intent : Intent = Intent(this, teste::class.java)
-            startActivity(intent)
+        mapa.setOnClickListener(){
+            val gmmIntentUri = Uri.parse("geo:0,0?q=hospital")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
         }
 
         button.setOnClickListener(){
@@ -44,5 +47,4 @@ class MainActivity :
             startActivity(intent)
         }
     }
-
 }

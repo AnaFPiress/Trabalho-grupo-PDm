@@ -64,8 +64,10 @@ class Doencas : AppCompatActivity() {
             }
         }
         tv12.setOnClickListener(){
-            val intent:Intent = Intent(this,teste::class.java)
-            startActivity(intent)
+            val gmmIntentUri = Uri.parse("geo:0,0?q=hospital")
+            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
         }
 
     }

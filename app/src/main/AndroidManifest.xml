@@ -40,30 +40,16 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
-
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
+            android:value="${MAPS_API_KEY}" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Login"
-            android:exported="true"
-            android:label="@string/title_activity_teste">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".teste"
+            android:name=".MainActivity"
             android:exported="false" />
+
         <activity
             android:name=".Perfil"
             android:exported="false" />
@@ -74,14 +60,18 @@
             android:name=".Doencas"
             android:exported="false" />
         <activity
-            android:name=".apresentacaoPDM"
-            android:exported="false" />
-        <activity
             android:name=".CriarConta"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+            android:name=".Login"
+            android:exported="true"
+            android:label="@string/title_activity_teste">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

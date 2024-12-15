@@ -146,7 +146,7 @@ class CriarConta : AppCompatActivity() {
                 val rsaEncryptionHelper = RSAEncryptionHelper(this@CriarConta)
                 val client = OkHttpClient()
                 val json = JSONArray(arrayOf(username, rsaEncryptionHelper.encrypt(password), email, peso, altura, idade, genero, alergias, doencas)).toString()
-
+                Log.d("teste",json)
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
                     .post(requestBody)
@@ -168,8 +168,10 @@ class CriarConta : AppCompatActivity() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.d("error", e.toString())
-                Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
-                //textView.text = "Erro ao criar conta: ${e.message}"
+                runOnUiThread(){
+                    Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                    //textView.text = "Erro ao criar conta: ${e.message}"
+                }
             }
         }
     }

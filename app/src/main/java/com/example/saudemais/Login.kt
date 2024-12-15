@@ -59,10 +59,15 @@ class Login : AppCompatActivity() {
                 val rsaEncryptionHelper = RSAEncryptionHelper(this@Login)
                 val client = OkHttpClient()
                 val array = arrayOf(username,rsaEncryptionHelper.encrypt(password))
-                val json = JSONArray(array).toString()
+                val a = rsaEncryptionHelper.encrypt(password)
+                //Log.d("rar",rsaEncryptionHelper.decrypt(password))
+                //val json = JSONArray(array).toString()
 
+                val json ="{\"nome\": \"$username\",\"pass\": \"$a\"}"
+                Log.d("tatata",json)
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
+                    .addHeader("pass2",a)
                     .post(requestBody)
                     .url("http://nebula-env.com:8086/login")
                     .build()
@@ -77,6 +82,7 @@ class Login : AppCompatActivity() {
                     val nome = arrayListOf<String>()
                     for (i in 0 until 1) {
                         val jsonObject = jsonArray.getJSONObject(i)
+                        Log.d("taata",jsonObject.getString("password"))
                         nome.add(jsonObject.getString("id_nome"))
                         nome.add(jsonObject.getString("nome"))
                     }

@@ -67,10 +67,10 @@ public class RSAEncryptionHelper {
     // Método para criptografar uma string usando a chave pública
     public String encrypt(String plainText) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] encryptedBytes = cipher.doFinal(plainText.getBytes("UTF-8"));
-            return Base64.encodeToString(encryptedBytes, Base64.DEFAULT);
+            return Base64.encodeToString(encryptedBytes, Base64.DEFAULT).replace('\n','a').replace('\r','a');
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -80,10 +80,10 @@ public class RSAEncryptionHelper {
     // Método para descriptografar uma string usando a chave privada
     public String decrypt(String encryptedText) {
         try {
-            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] decryptedBytes = cipher.doFinal(Base64.decode(encryptedText, Base64.DEFAULT));
-            return new String(decryptedBytes, "UTF-8");
+            return new String(decryptedBytes, "UTF-8").replace('\n','a').replace('\r','a');
         } catch (Exception e) {
             e.printStackTrace();
             return null;
