@@ -84,7 +84,7 @@ class Sintomas : AppCompatActivity() {
     private fun checkTam(genero: EditText, generoL: TextInputLayout) {
         if (genero.text.toString().length > generoL.counterMaxLength) {
             //Log.d("teste", "testedslknfisd")
-            generoL.error = "muitas letras"
+            generoL.error = "Muitas Letras"
         } else {
             generoL.error = null
         }
@@ -100,11 +100,7 @@ Lança uma corrotina para realizar o POST usando OkHttp.
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val client = OkHttpClient()
-                //val json = "{\"sintomas\": \"$sintomas\"}"
-                //Log.d("json", json)
-                //val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
-                    //.post(requestBody)
                     .addHeader("sint1",sintomas)
                     .addHeader("sint2",sintomas1)
                     .addHeader("sint3",sintomas2)

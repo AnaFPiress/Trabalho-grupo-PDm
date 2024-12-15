@@ -71,7 +71,7 @@ class CriarConta : AppCompatActivity() {
                         pass2L.error = "nao cumpre requisitos"
                         //Log.d("teste", "text: ${pass} ,error: ${pass2L.error} ,regex: ${pass.matches(regex)} ;tam: ${pass.length}")
                     } else {
-                        Toast.makeText(this, "fkhbds", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(this, "fkhbds", Toast.LENGTH_SHORT).show()
 
                         nomeL.visibility = View.INVISIBLE
                         nome?.visibility = View.INVISIBLE
@@ -126,8 +126,7 @@ class CriarConta : AppCompatActivity() {
                         checkTam(doencas!!, doencasL)
                     } else {
                         //cont += 1
-                        Toast.makeText(this, "fkhbds!!!!!!!!!!!!!!!!!!!!!", Toast.LENGTH_SHORT)
-                            .show()
+                        //Toast.makeText(this, "fkhbds!!!!!!!!!!!!!!!!!!!!!", Toast.LENGTH_SHORT) .show()
                         //println(cont)
                         // funcao aqui para adicoinar a db
                         val nomeF = nome!!.text.toString().plus(" ").plus(nome2!!.text.toString())
@@ -146,7 +145,7 @@ class CriarConta : AppCompatActivity() {
                 val rsaEncryptionHelper = RSAEncryptionHelper(this@CriarConta)
                 val client = OkHttpClient()
                 val json = JSONArray(arrayOf(username, rsaEncryptionHelper.encrypt(password), email, peso, altura, idade, genero, alergias, doencas)).toString()
-                Log.d("teste",json)
+                //Log.d("teste",json)
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()
                     .post(requestBody)
@@ -165,14 +164,14 @@ class CriarConta : AppCompatActivity() {
                 } else {
                     Log.d("error", "Account creation failed: ${response.message}")
                     runOnUiThread(){
-                        Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@CriarConta,"Erro!",Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Log.d("error", e.toString())
+                Log.d("Erro", e.toString())
                 runOnUiThread(){
-                    Toast.makeText(this@CriarConta,"erro!",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CriarConta,"Erro!",Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -205,7 +204,7 @@ caso seja maiorr coloca o erro no layout, caso contrario o texto é  null
     private fun checkTam(genero: EditText, generoL: TextInputLayout) {
         if (genero.text.toString().length > generoL.counterMaxLength) {
             //Log.d("teste", "testedslknfisd")
-            generoL.error = "muitas letras"
+            generoL.error = "Muitas Letras"
         } else {
             generoL.error = null
         }

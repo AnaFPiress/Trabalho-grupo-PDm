@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
@@ -30,11 +29,6 @@ class Login : AppCompatActivity() {
         val password = passwordL.editText
         val button = findViewById<Button>(R.id.button)
         val button2 = findViewById<Button>(R.id.button2)
-
-    /*    if (email?.text.toString().isEmpty() || password?.text.toString().isEmpty()){
-            showEmptyAlert() //substituir pois quando abre pela primeira vez aparece logo(maybe Toast)
-        }*/
-
 
         button.setOnClickListener() {
             if(email?.text.toString().isEmpty() || password?.text.toString().isEmpty() ){
@@ -73,7 +67,6 @@ class Login : AppCompatActivity() {
 
                 if (response.isSuccessful && responseData != null) {
                     //Log.d("success", "Login successful: $responseData")
-                    //textView.text = "Login realizado com sucesso!"
                     val jsonArray = JSONArray(responseData)
                     val nome = arrayListOf<String>()
                     for (i in 0 until 1) {
@@ -89,14 +82,14 @@ class Login : AppCompatActivity() {
                 } else {
                     Log.d("error", "Login failed: ${response.message}")
                     runOnUiThread(){
-                    Toast.makeText(this@Login,"erro login",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login,"Erro Login",Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.d("error", e.toString())
                 runOnUiThread() {
-                    Toast.makeText(this@Login, "erro login", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login, "Erro Login", Toast.LENGTH_SHORT).show()
                 }
             }
         }

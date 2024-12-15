@@ -17,10 +17,8 @@ import androidx.core.view.WindowInsetsCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONArray
 
@@ -44,7 +42,7 @@ class Doencas : AppCompatActivity() {
         val tv1 = findViewById<TextView>(R.id.trat)
         //Log.d("Doencas",text.toString())
         val button  = findViewById<Button>(R.id.button4)
-        Log.d("da",text.toString())
+        //Log.d("da",text.toString())
         tv.text = text
         val a = text!!.split("\n")
         val a2 = id!!.split("\n")
@@ -86,7 +84,7 @@ class Doencas : AppCompatActivity() {
                 if (response.isSuccessful && responseData != null) {
                     val jsonArray = JSONArray(responseData)
                     val diseasesList = mutableListOf<String>()
-                    val diseasesList2 = mutableListOf<String>()
+                    //val diseasesList2 = mutableListOf<String>()
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
                         diseasesList.add(jsonObject.getString("descricaoT"))

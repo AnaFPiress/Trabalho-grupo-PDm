@@ -53,6 +53,7 @@ class Perfil : AppCompatActivity() {
         tv3 = findViewById<TextView>(R.id.tvAltura)
         tv4 = findViewById<TextView>(R.id.tvGenero)
         tv5 =  findViewById<TextView>(R.id.tvIdade)
+
         //chamar funcao para aparecer no inicio os dados do user
         getUser(id!!)
         nome.setOnClickListener() {
@@ -120,14 +121,14 @@ class Perfil : AppCompatActivity() {
                         genero = jsonObject.getString("genero")
                         alergias = jsonObject.getString("alergias")
                         doencas = jsonObject.getString("quadro")
-                        Log.d("hgvyu",peso.toString())
-                        Log.d("hgvyu",altura.toString())
-                        Log.d("hgvyu",genero.toString())
-                        Log.d("hgvyu",dataNas.toString())
+                        //Log.d("hgvyu",peso.toString())
+                        //Log.d("hgvyu",altura.toString())
+                        //Log.d("hgvyu",genero.toString())
+                        //Log.d("hgvyu",dataNas.toString())
 
                     }
-                    //Log.d("doencas",nome!!)
-                   // Log.d("fadfads",responseData)
+                    //Log.d("teste",nome!!)
+                   // Log.d("teste",responseData)
 
                     val textoMeio = alergias +"\n" + doencas
 
@@ -178,13 +179,13 @@ caso contrario erro
             val dialogLayout = inflater.inflate(R.layout.dialog, null)
             val editTextDialog: EditText = dialogLayout.findViewById(R.id.dialog)
             with(builder) {
-                setTitle("Nome")
+                setTitle("Novo Nome")
                 setPositiveButton("Ok") { dialog, which ->
                     if (editTextDialog.text.toString().isNotEmpty()) {
                         changeNome(id, editTextDialog.text.toString(),tv)
-                        Toast.makeText(context, "nome alterado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Nome Alterado", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "add nome ", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Add Nome ", Toast.LENGTH_SHORT).show()
                     }
                 }
                 setNegativeButton("Voltar") { dialog, _ ->
@@ -210,13 +211,13 @@ caso contrario erro
         val dialogLayout = inflater.inflate(R.layout.dialog, null)
         val editTextDialog: EditText = dialogLayout.findViewById(R.id.dialog)
         with(builder) {
-            setTitle("Email")
+            setTitle("Novo Email")
             setPositiveButton("Ok") { dialog, which ->
                 if (editTextDialog.text.toString().isNotEmpty()) {
                     changeEmail(id, editTextDialog.text.toString(),textView)
-                    Toast.makeText(context, "email alterado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Email Alterado", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "add email ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Add email ", Toast.LENGTH_SHORT).show()
                 }
             }
             setNegativeButton("Voltar") { dialog, _ ->
@@ -244,7 +245,7 @@ caso contrario erro
         val pass2L = dialogLayout.findViewById<TextInputLayout>(R.id.password2)
         val pass2 = pass2L.editText
         with(builder) {
-            setTitle("Password")
+            setTitle("Nova Password")
             setPositiveButton("Ok") { dialog, which ->
                 if (pass?.text.toString().isNotEmpty()&& pass2?.text.toString().isNotEmpty()) {
                     if (!checkPass(pass?.text.toString())) {
@@ -254,10 +255,10 @@ caso contrario erro
                         //Log.d("teste", "text: ${pass} ,error: ${pass2L.error} ,regex: ${pass.matches(regex)} ;tam: ${pass.length}")
                     } else {
                         changePass(id, pass!!.text.toString(),textView)
-                        Toast.makeText(context, "password alterado", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Password Alterado", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "add password ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Add Password ", Toast.LENGTH_SHORT).show()
                 }
             }
             setNegativeButton("Voltar") { dialog, _ ->
@@ -290,13 +291,13 @@ caso contrario erro
         val generoL= dialogLayout.findViewById<TextInputLayout>(R.id.genero)
         val genero = generoL.editText
         with(builder) {
-            setTitle("dados Lista")
+            setTitle("Novos Dados")
             setPositiveButton("Ok") { dialog, which ->
                 if (idade?.text.toString().isNotEmpty() && peso?.text.toString().isNotEmpty() && altura?.text.toString().isNotEmpty() &&genero?.text.toString().isNotEmpty()) {
                     changeDados(id, idade!!.text.toString(), peso!!.text.toString(), altura!!.text.toString(), genero!!.text.toString(),textView)
-                    Toast.makeText(context, "dados alterado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Dados Alterados", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "add dados ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Add Dados ", Toast.LENGTH_SHORT).show()
                 }
             }
             setNegativeButton("Voltar") { dialog, _ ->
@@ -325,13 +326,13 @@ caso contrario erro
         val doencasL = dialogLayout.findViewById<TextInputLayout>(R.id.doencas)
         val doencas = doencasL.editText
         with(builder) {
-            setTitle("doencas Lista")
+            setTitle("Novas Doencas")
             setPositiveButton("Ok") { dialog, which ->
                 if (alergias?.text.toString().isNotEmpty() && doencas?.text.toString().isNotEmpty()) {
                     changeDoencas(id, alergias!!.text.toString(),doencas!!.text.toString(),textView)
-                    Toast.makeText(context, "doencas alterado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Doencas Alteradas", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "add doencas ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Add Doencas ", Toast.LENGTH_SHORT).show()
 
                 }
             }
@@ -436,7 +437,7 @@ caso contrario erro
                 val responseData = response.body?.string()
 
                 if (response.isSuccessful && responseData != null) {
-                    Toast.makeText(this@Perfil,"Password Alterado",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Perfil,"Password Alterada",Toast.LENGTH_SHORT).show()
                     getUser( id!!)
                 } else {
                     Log.d("error", "Request failed: ${response.message}")
