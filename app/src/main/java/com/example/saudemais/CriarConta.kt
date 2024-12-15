@@ -143,8 +143,9 @@ class CriarConta : AppCompatActivity() {
     fun createAccount(username: String, password: String, email: String,idade:String, peso :Float, altura :Float,genero: String,alergias:String, doencas:String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                val rsaEncryptionHelper = RSAEncryptionHelper(this@CriarConta)
                 val client = OkHttpClient()
-                val json = JSONArray(arrayOf(username, password, email, peso, altura, idade, genero, alergias, doencas)).toString()
+                val json = JSONArray(arrayOf(username, rsaEncryptionHelper.encrypt(password), email, peso, altura, idade, genero, alergias, doencas)).toString()
 
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
                 val request = Request.Builder()

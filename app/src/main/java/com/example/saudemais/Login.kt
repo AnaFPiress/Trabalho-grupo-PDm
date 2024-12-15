@@ -56,8 +56,9 @@ class Login : AppCompatActivity() {
     private fun login(username: String, password: String,intent: Intent) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                val rsaEncryptionHelper = RSAEncryptionHelper(this@Login)
                 val client = OkHttpClient()
-                val array = arrayOf(username,password)
+                val array = arrayOf(username,rsaEncryptionHelper.encrypt(password))
                 val json = JSONArray(array).toString()
 
                 val requestBody = json.toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
